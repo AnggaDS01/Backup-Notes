@@ -253,7 +253,7 @@ Then wait until it finishes, usually it doesn't take long, depending on your int
 ---
 
 ## Install Docker
-Next, you need to install Docker. You can watch this video for the installation process. I recommend watching it until the end first, before practicing, or check out 👉 this documentation, it's very complete.
+Next, you need to install Docker. You can watch this video for the installation process. I recommend watching it until the end first, before practicing, or check out 👉 [**this documentation**](https://docs.docker.com/desktop/setup/install/windows-install/), it's very complete.
 
 [<img src="https://img.youtube.com/vi/ZyBBv1JmnWQ/hqdefault.jpg"/>](https://www.youtube.com/embed/ZyBBv1JmnWQ)
 
@@ -426,27 +426,66 @@ Next, I'll discuss how to set up **local storage access** in **Label Studio**. L
 ---
 
 ## Setup Local Storage di Label Studio
-At this point, Label Studio is ready to use. But there's one important thing we need to set up, especially if you have a large and extensive dataset: Local Storage.
-Why is Local Storage important? Because if you directly upload a huge dataset to Label Studio, it can result in errors. For example, you might see an error like this:
-Gambar 7.1 Tampilan ketika data yang di-import terlalu banyakAs you can see, there's an error message in red, telling you that the uploaded file is too large. So, what's the solution? Do we need to upload it gradually? Sure, but that would be super inefficient. That's why I'm going to share a tip on how to handle errors like the one shown above.
+At this point, **Label Studio** is ready to use. But there's one important thing we need to set up, especially if you have a large and extensive dataset: **Local Storage**.
+
+Why is Local Storage important? Because if you directly upload a huge dataset to **Label Studio**, it can result in errors. For example, you might see an error like this:
+
+![image](https://github.com/user-attachments/assets/9947d6e4-4b7e-48de-bf99-94ef89f4c5d6)
+
+As you can see, there's an error message in red, telling you that the uploaded file is too large. So, what's the solution? Do we need to upload it gradually? Sure, but that would be super inefficient. That's why I'm going to share a tip on how to handle errors like the one shown above.
+
 Instead of uploading the dataset directly, we can take advantage of Local Storage in Label Studio. This feature allows Label Studio to access your dataset stored on your computer without uploading everything. How convenient is that?
-You might wonder, why not use cloud storage instead? The answer is that cloud storage usually comes with a cost, especially if your dataset is large. You might face additional charges for storage and data access, which can get expensive, especially for beginners or small teams with limited budgets. However, if you're not constrained by a budget, I'd recommend using cloud storage. If you want to learn how to connect cloud storage to Label Studio, you can check the documentation 👉 here.
-Now, back to the original case where the dataset we want to import is too large. Open your terminal (I recommend installing Windows Terminal). To do this, go to the Microsoft Store from the Windows menu (⊞ Win), then type "Windows Terminal" in the search bar and install it.
-Gambar 7.2 Tampilan Windows Terminal di Microsoft StoreWhy use Windows Terminal? Because you can open a new tab within the terminal without having to open a separate terminal window, which keeps everything neat and organized. Here's an example:
-Gambar 7.3 Tampilan Windows TerminalNext, open the Ubuntu terminal by typing wsl. Once the terminal is open, we need to create an environment variable in Ubuntu. Don't worry, you don't need to enter the label_studio virtual environment or run Label Studio just yet.
+
+You might wonder, why not use cloud storage instead? The answer is that cloud storage usually comes with a cost, especially if your dataset is large. You might face additional charges for storage and data access, which can get expensive, especially for beginners or small teams with limited budgets. However, if you're not constrained by a budget, I'd recommend using cloud storage. If you want to learn how to connect cloud storage to **Label Studio**, you can check the documentation 👉 [**here**](https://labelstud.io/guide/storage).
+
+Now, back to the original case where the dataset we want to import is too large. Open your terminal (I recommend installing **Windows Terminal**). To do this, go to the **Microsoft Store** from the Windows menu (⊞ Win), then type "Windows Terminal" in the search bar and install it.
+
+![image](https://github.com/user-attachments/assets/58bb9332-fd40-4c25-b9c1-a90cf43d20e5)
+
+Why use **Windows Terminal**? Because you can open a new tab within the terminal without having to open a separate terminal window, which keeps everything neat and organized. Here's an example:
+
+![image](https://github.com/user-attachments/assets/9c34bf67-117c-457e-8389-8d1b80d61ecc)
+
+Next, open the **Ubuntu terminal** by typing wsl. Once the terminal is open, we need to create an **environment variable** in **Ubuntu**. Don't worry, you don't need to enter the `label_studio` virtual environment or run **Label Studio** just yet.
+
 Before continuing, create a specific folder to store your dataset. You can name it however you like, depending on your needs. In my case, I created a folder like this:
+
+```bash
 mkdir -p Workspace/Label_Studio/Datasets
-Then, set up the environment variable by entering the following command to access the ~/.bashrc file:
+```
+
+Then, set up the environment variable by entering the following command to access the `~/.bashrc` file:
+
+```bash
 nano ~/.bashrc
-This file is the configuration file for the Bash shell (Bourne Again Shell) used in Linux or Unix-based systems, including your WSL. Its function is to store various settings and environment variables that will run automatically every time you open a Bash terminal or log into a Bash session interactively.
-Once you're in the nano editor, scroll down to the bottom and type or copy the following script:
+```
+
+This file is the configuration file for the **Bash shell** (Bourne Again Shell) used in Linux or Unix-based systems, including your **WSL**. Its function is to store various settings and environment variables that will run automatically every time you open a **Bash** terminal or log into a **Bash** session interactively.
+
+Once you're in the `nano` **editor**, scroll down to the bottom and type or copy the following script:
+
+```
 export LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
 export LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/home/anggads01/Workspace/Label_Studio/Datasets
-Gambar 7.4 Tampilan nano editorRemember to adjust the path in LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT.
+```
+
+![image](https://github.com/user-attachments/assets/2ba5c38f-6adc-44be-9349-58c610b9e4c1)
+
+Remember to adjust the path in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`.
+
+```
 /home/anggads01/Workspace/Label_Studio/Datasets
-It should match the folder where your dataset is saved. So the path above refers to the Datasets folder as the parent folder, which will contain subfolders of your dataset. Confused? Okay, now take a look at the image below:
-Gambar 7.5 Parent path dari dataset yang di akses pada Label StudioYou can see that in the Datasets folder, there are subfolders called Fruit_Images and Receipt_Images, which are my datasets containing the images to be labeled.
-To save the file in the nano editor, press Ctrl+O, then press Enter, and to exit the nano editor, press Ctrl+X. Quick tip if you want to know nano editor shortcuts.
+```
+
+It should match the folder where your dataset is saved. So the path above refers to the `Datasets` folder as the parent folder, which will contain subfolders of your dataset. Confused? Okay, now take a look at the image below:
+
+![image](https://github.com/user-attachments/assets/91312221-e8ca-43b6-9b49-88458634e96c)
+
+You can see that in the `Datasets` folder, there are subfolders called `Fruit_Images` and `Receipt_Images`, which are my datasets containing the images to be labeled.
+
+To save the file in the nano editor, press `Ctrl+O`, then press `Enter`, and to exit the `nano` editor, press `Ctrl+X`. Quick tip if you want to know nano editor shortcuts.
+
+```
 Navigation Shortcuts
 Ctrl + A: Go to the beginning of the line.
 Ctrl + E: Go to the end of the line.
@@ -481,36 +520,103 @@ Pro Tips
 1. Shortcut Combinations: For example, use Ctrl + K to cut several lines, then paste them with Ctrl + U.
 2. Highlight Text Block: Press Ctrl + ^, then use arrow keys to select text. Use Ctrl + K to cut or Alt + 6 to copy.
 3. Quick Search and Replace: Use Ctrl + , then input the text you want to search and replace.
-Next, save the changes and run this command to apply the changes without restarting the terminal:
-source ~/.bashrc
-Then, the next step is to check if the variable has been saved. How to do this? You can type this command in the terminal:
-echo $LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED
-echo $LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT
-The output should look like the image below:
-Gambar 7.6 Output setelah set environment variabel di nano editorThis means your variable has been saved to your system's environment. Once it's done, you just need to run Label Studio, making sure that the label_studio virtual environment is activated first. After that, you can run Label Studio by typing:
-label-studio
-Then, wait until it runs on localhost. Once it's open, create a new project by clicking the Create button.
-Gambar 7.7. Tombol Create di Label StudioAfter that, you can name the project based on your needs.
-Gambar 7.8 Tampilan awal saat mebuat projectLet's skip the Data Import part and go directly to the Labeling Setup. You can check out the template 👉 here.
-Gambar 7.9 Tampilan pada labeling setupYou can choose according to your needs. In this example, I'm taking the object detection option.
-Gambar 7.10 Tampilan setelah memilih template user interface untuk labelingIn this section, you can add a label (no. 1) according to your needs and click Add to add a new label (no. 2). Then press Save.
-Gambar 7.11 Tampilan ketika selesai membuat projectNow, the interface should look like the image above, with no data imported yet. To set up local storage, go to Settings.
-Gambar 7.12 Tombol setting pada projectThen go to Cloud Storage.
-Gambar 7.13 Tampilan setting projectPress the Add Source Storage button.
-Gambar 7.14 Tampilan setting pada Cloud StorageIn this section, choose Local files.
-Gambar 7.15 Opsi dari tipe storage yang akan digunakanNow, here's the setup.
-Gambar 7.16 Set up local storageThe Storage Title can be filled in freely.
-In the Absolute local path, this should be filled with the path to your dataset, as I explained earlier. Since I previously set the environment variable with the parent path of my dataset as /home/anggads01/Workspace/Label_Studio/Datasets, in the Absolute local path, I filled it with /home/anggads01/Workspace/Label_Studio/Datasets/Fruit_Images, where Fruit_Images is the folder containing the images to be labeled.
-Once that's done, in the File Filter Regex, enter the file extension for the files you want to label. Since my data is images, I entered .*(jpe?g). You can adjust this to match the extension of your data. Don't worry, you don't need to be proficient in Regex, just follow the suggestion from the placeholder.
-Check the box Treat every bucket object as a source file.
-Then click the Check Connection button.
-If successful, you'll see the message Successfully connected.
-Click the Add Storage button, and the interface should look like this:
+```
 
-Gambar 7.17 Tampilan setelah set up local storageThen, you'll need to Sync Storage so that Label Studio can access your dataset locally. This will take time depending on how much data you have.
-Gambar 7.18 Tampilan setelah melakukan Sync StorageNow you should be able to see that in my dataset, I have 300 images that need labeling. Then, go back to your project, and now your data should be available.
-Gambar 7.19 Tombol kembali ke menu awal projectFor me, the interface looks like this:
-Gambar 7.20 Tampilan ketika berhasil connect ke local storageAnd yes… we've successfully completed the local storage setup in Label Studio. Woohoo 🎉🎉🎉! I hope you were able to do it too. The next section of my article will be about setting up Auto Annotation in Label Studio ✨.
+Next, save the changes and run this command to apply the changes without restarting the terminal:
+
+```
+source ~/.bashrc
+```
+
+Then, the next step is to check if the variable has been saved. How to do this? You can type this command in the terminal:
+
+```
+echo $LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED
+```
+
+```
+echo $LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT
+```
+
+The output should look like the image below:
+
+![image](https://github.com/user-attachments/assets/7cacd520-761f-455a-bd47-1b57b1ff1dca)
+
+This means your variable has been saved to your system's environment. Once it's done, you just need to run Label Studio, making sure that the label_studio virtual environment is activated first. After that, you can run Label Studio by typing:
+
+```
+label-studio
+```
+
+Then, wait until it runs on **localhost**. Once it's open, create a new project by clicking the `Create` button.
+
+![image](https://github.com/user-attachments/assets/ed2db787-bbf3-441f-8dee-aaf6d82f7082)
+
+After that, you can name the project based on your needs.
+
+![image](https://github.com/user-attachments/assets/ee0999bd-63dd-446e-8086-e070a43c3042)
+
+Let's skip the Data Import part and go directly to the Labeling Setup. You can check out the template 👉 [**here**](https://labelstud.io/templates/).
+
+![image](https://github.com/user-attachments/assets/345b6950-9de5-4e28-a59f-b8bf06956077)
+
+You can choose according to your needs. In this example, I'm taking the object detection option.
+
+![image](https://github.com/user-attachments/assets/1ccad72c-b1a2-457e-8edb-d638e4d486a1)
+
+In this section, you can add a label (no. 1) according to your needs and click Add to add a new label (no. 2). Then press `Save`.
+
+![image](https://github.com/user-attachments/assets/60abe6d8-fa2d-4ea8-9cd8-79367e33258a)
+
+Now, the interface should look like the image above, with no data imported yet. To set up local storage, go to `Settings`.
+
+![image](https://github.com/user-attachments/assets/adb7d195-2f79-4364-8c6c-14d2c64e4291)
+
+Then go to Cloud Storage.
+
+![image](https://github.com/user-attachments/assets/3c7e2167-8a0d-43ee-9e70-5fbbd7102496)
+
+Press the **Add Source Storage** button.
+
+![image](https://github.com/user-attachments/assets/457b8024-bd0f-435f-a111-ff1c5fe9e088)
+
+In this section, choose **Local files**.
+
+![image](https://github.com/user-attachments/assets/c3330e2b-37a2-42bf-83cd-3cfdde9d1258)
+
+Now, here's the setup.
+
+![image](https://github.com/user-attachments/assets/c1b6b3e1-749d-4508-a6c7-03261194e267)
+
+1. The **Storage Title** can be filled in freely.
+
+2. In the **Absolute local path**, this should be filled with the path to your dataset, as I explained earlier. Since I previously set the environment variable with the parent path of my dataset as `/home/anggads01/Workspace/Label_Studio/Datasets`, in the **Absolute local path**, I filled it with `/home/anggads01/Workspace/Label_Studio/Datasets/Fruit_Images`, where `Fruit_Images` is the folder containing the images to be labeled.
+
+3. Once that's done, in the **File Filter Regex**, enter the file extension for the files you want to label. Since my data is images, I entered `.*(jpe?g)`. You can adjust this to match the extension of your data. Don't worry, you don't need to be proficient in Regex, just follow the suggestion from the placeholder.
+
+4. Check the box `Treat every bucket object as a source file`.
+
+5. Then click the `Check Connection` button.
+
+6. If successful, you'll see the message `Successfully connected`.
+
+7. Click the Add Storage button, and the interface should look like this:
+
+![image](https://github.com/user-attachments/assets/2908e036-167f-462b-ba1c-a90ceee0fb48)
+
+Then, you'll need to **Sync Storage** so that Label Studio can access your dataset locally. This will take time depending on how much data you have.
+
+![image](https://github.com/user-attachments/assets/3e345b2c-61ed-4d1c-95e0-01e5b7d5c734)
+
+Now you should be able to see that in my dataset, I have **300 images** that need labeling. Then, go back to your project, and now your data should be available.
+
+![image](https://github.com/user-attachments/assets/a0d8f14d-d76c-4160-a5c6-6278070707eb)
+
+For me, the interface looks like this:
+
+![image](https://github.com/user-attachments/assets/85df9342-42f4-4c7c-96c9-067cd85cd367)
+
+And yes… we've successfully completed the **local storage setup** in Label Studio. Woohoo 🎉🎉🎉! I hope you were able to do it too. The next section of my article will be about setting up **Auto Annotation** in Label Studio ✨.
 
 ---
 
