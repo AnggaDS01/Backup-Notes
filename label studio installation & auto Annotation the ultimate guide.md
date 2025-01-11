@@ -1,4 +1,4 @@
-# Label Studio Installation & Auto Annotation: The Ultimate Guide
+![image](https://github.com/user-attachments/assets/8d6f8e3c-3fff-418c-94a8-3ca02a76dfb1)# Label Studio Installation & Auto Annotation: The Ultimate Guide
 
 ![image](https://github.com/user-attachments/assets/4ca4f684-fded-4060-a78c-a1a568337ce8)
 
@@ -493,6 +493,7 @@ Ctrl + Y: Scroll up (Page Up).
 Ctrl + V: Scroll down (Page Down).
 Alt + /: Go to the end of the file.
 Alt + : Go to the start of the file.
+
 Search and Replace Shortcuts
 Ctrl + W: Search for text.
 Ctrl + : Search and replace text.
@@ -502,6 +503,7 @@ Ctrl + K: Cut the current line.
 Ctrl + U: Paste the cut line.
 Ctrl + J: Justify text (Align left and right).
 Alt + 6: Copy the highlighted text.
+
 Undo and Redo
 Alt + U: Undo (Revert the last change).
 Alt + E: Redo (Restore the undone change).
@@ -509,11 +511,13 @@ File Shortcuts
 Ctrl + O: Save the file (Write Out).
 Ctrl + X: Exit the editor.
 Ctrl + R: Insert a file into the text you're editing.
+
 Line Manipulation Shortcuts
 Ctrl + T: Activate spell check.
 Ctrl + ^: Start marking text.
 Alt + ]: Indent the line.
 Alt + [: Remove the indentation of the line.
+
 Display Help
 Ctrl + G: Show the help menu.
 Pro Tips
@@ -620,28 +624,66 @@ And yes… we've successfully completed the **local storage setup** in Label Stu
 
 ---
 
-Setup Auto Annotation
+## Setup Auto Annotation
 After setting up local storage, let's dive into a feature that will make your workflow even more efficient: Auto Annotation. Essentially, this feature turns Label Studio into a sort of "smart assistant" that can automatically create annotations based on the machine learning model we've prepared.
+
 Okay, now we're going to go through the detailed steps to set up Auto Annotation using a pretrained model in Label Studio. Get your coffee ready, bro, because this step can get a bit technical, but I'll make sure it's easy to follow. Let's start!
+
 The first step is, of course, to run Label Studio in the terminal. Remember, you need to activate the virtual environment where Label Studio is installed, then run Label Studio by typing:
+
+```
 label-studio
-Once it's running, open your browser and access Label Studio through the address that appears in the terminal. By default, it's http://localhost:8080/, just leave it open because we'll set up the project after we successfully set up auto annotation.
-Next, you need to download (clone) the label-studio-ml-backend repository. But before that, create a folder where you want to store the repository.
-For example, I created a folder named Label_Studio and saved the repo there. To download the repo, open a new tab in Windows Terminal and type the following command in your Ubuntu terminal:
+```
+
+Once it's running, open your browser and access Label Studio through the address that appears in the terminal. By default, it's `http://localhost:8080/`, just leave it open because we'll set up the project after we successfully set up auto annotation.
+
+Next, you need to `download (clone)` the `label-studio-ml-backend` repository. But before that, create a folder where you want to store the repository.
+
+![image](https://github.com/user-attachments/assets/a8775947-8b38-47cc-816e-acbca9df2f90)
+
+For example, I created a folder named `Label_Studio` and saved the repo there. To download the repo, open a new tab in Windows Terminal and type the following command in your Ubuntu terminal:
+
+```
 git clone https://github.com/HumanSignal/label-studio-ml-backend.git
+```
+
 It should look something like this:
-You can see above that the repository has been cloned. Next, I'm going to give you some tutorials related to the models that can be used for auto annotation in Label Studio. Make sure that after you clone it, you enter the virtual environment that has Label Studio installed. For me:
+
+![image](https://github.com/user-attachments/assets/35deb33a-cb3d-4733-8359-38b00decd647)
+
+You can see above that the repository has been cloned. Next, I'm going to give you some tutorials related to the models that can be used for auto annotation in Label Studio. `Make sure` that after you clone it, you enter the virtual environment that has Label Studio installed. For me:
+
+```
 conda activate label_studio
-Setting Up the YOLO Model
+```
+
+### Setting Up the YOLO Model
 Now, navigate to the ML Backend directory:
+
+```
 cd label-studio-ml-backend/label_studio_ml/examples/yolo
+```
+
 After that, you can type:
+
+```
 code .
-This means you want to open the yolo folder in Visual Studio Code. Once it's open, find and open the docker-compose.yml file. In this file, there is an important variable: LABEL_STUDIO_API_KEY. You need to fill this with your Label Studio API Key. Here's how:
+```
+
+This means you want to open the `yolo` folder in **Visual Studio Code**. Once it's open, find and open the `docker-compose.yml` file. In this file, there is an important variable: `LABEL_STUDIO_API_KEY`. You need to fill this with your **Label Studio API** Key. Here's how:
+
 1. Click on your profile picture at the top right of Label Studio.
-2. Click "Account & Settings".
-3. Find the API Key in your account menu and copy the value.
-Paste it in the LABEL_STUDIO_API_KEY section.
+2. Click **"Account & Settings"**.
+
+![image](https://github.com/user-attachments/assets/817cde04-3252-40d5-a05a-d20af9cbf7cb)
+
+3. Find the **API Key** in your account menu and copy the value.
+
+![image](https://github.com/user-attachments/assets/6dd1ee11-2afa-4904-a0ea-cfad0557ad2c)
+
+Paste it in the `LABEL_STUDIO_API_KEY` section.
+
+```
 version: "3.8"
 services:
     ...
@@ -651,23 +693,44 @@ services:
       - LABEL_STUDIO_API_KEY=your_api_key_here
       ...
     ...
-For the LABEL_STUDIO_URL, just leave it as the default at port 8080, as it's important for connecting the model server to our Label Studio server.
-Next, you can open the Dockerfile and pay attention to the following line of code in the Dockerfile:
-...
+```
+
+For the `LABEL_STUDIO_URL`, just leave it as the default at port **8080**, as it's important for connecting the model server to our Label Studio server.
+
+Next, you can open the **Dockerfile** and pay attention to the following line of code in the Dockerfile:
+
+```
 RUN conda install -c "nvidia/label/cuda-12.1.1" cuda -y
 ENV CUDA_HOME=/opt/conda \
     TORCH_CUDA_ARCH_LIST="6.0;6.1;7.0;7.5;8.0;8.6+PTX;8.9;9.0"
-...
+```
+
 Now, you can delete that line. Why? Because it will cause an error since the referenced CUDA version can't be found. I did this based on my trial and error, but don't worry, this doesn't mean we can't use GPU support for inference/prediction. The base image of the Docker already comes with GPU support, as you can see from this line of code:
+
+```
 FROM pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime
 ...
+```
+
 The next step is to run the following command to build and run the YOLO container, but make sure Docker Desktop is running. You can go to the Windows menu, search for Docker Desktop, and open it. Wait for it to start, then type the following command in your terminal:
+
+```
 docker-compose up --build
---build is used when we want to build the Docker container for the first time. This usually takes a long time and can be as large as 10 GB, so make sure you have enough Local Storage.
+```
+
+`--build` is used when we want to build the Docker container for the first time. This usually takes a long time and can be as large as 10 GB, so make sure you have enough Local Storage.
+
 Next, open Label Studio in your browser again, create a project by clicking the Create button, and give your project a name. For example, "YOLO - Bounding Box - Fruits". This is important so you don't forget what dataset you're labeling and what the task is. But basically, name it however you like.
-Next, adjust the Labeling Interface. Once the YOLO container is running, you need to adjust the Labeling Interface in Label Studio to match the YOLO format. You can find the guide 👉 here.
-Go to the Labeling Setup panel and select Custom template.
+
+Next, adjust the Labeling Interface. Once the YOLO container is running, you need to adjust the Labeling Interface in Label Studio to match the YOLO format. You can find the guide 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/yolo#quick-start).
+
+Go to the **Labeling Setup** panel and select `Custom template`.
+
+![image](https://github.com/user-attachments/assets/c697d131-3976-40d5-a4db-cd0625444014)
+
 After opening the Custom template view, you can follow along with me or adjust it according to your label classes.
+
+```
 <View>
   <Image name="image" value="$image"/>
   <RectangleLabels name="label" toName="image" model_score_threshold="0.25">
@@ -676,29 +739,70 @@ After opening the Custom template view, you can follow along with me or adjust i
     <Label value="apple" background="green" predicted_values="apple"/>
   </RectangleLabels>
 </View>
-You can either copy or adjust it by changing the value in the Label tag. The predicted_values section contains the classes that YOLO can predict. You can see the list of classes 👉 here. Next, you'll place the template in the Labeling Interface in Label Studio, as shown below.
+```
+
+You can either copy or adjust it by changing the value in the `Label` tag. The `predicted_values` section contains the classes that YOLO can predict. You can see the list of classes 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/blob/master/label_studio_ml/examples/yolo/YOLO_CLASSES.md). Next, you'll place the template in the Labeling Interface in Label Studio, as shown below.
+
+![image](https://github.com/user-attachments/assets/e85ba917-407a-4ec6-94be-d25457928b66)
+
 Then, click the Save button. If you've already saved it and want to change the color of each label or add a label class, you can go to Settings → Labeling Interface. You can add classes in the add label names section. If you want to change the label color, you can see no. 2, just click on it and adjust it to the color you think fits.
+
+![image](https://github.com/user-attachments/assets/1954a537-4514-4906-b705-b572a8cdf862)
+
 Before we integrate the model into the project, you need to connect your data in local storage to Label Studio. You can check the tutorial for that in the Setup Local Storage in Label Studio section from the previous steps. Now, let's integrate the YOLO model into the project we created. Go to Settings → Model, then click the Connect Model button.
+
+![image](https://github.com/user-attachments/assets/ad8e8825-01a7-4fb9-900d-b599a370bd33)
+
 For the configuration, first, give your model a name, then enter the address URL of the model server. By default, it's http://localhost:9090. Don't forget to turn on the Interactive preannotations option. Lastly, click the Validate and Save button, and with this, your model should now be connected to Label Studio.
+
+![image](https://github.com/user-attachments/assets/397ca0e6-9e2e-45cc-9ec4-b8383327e214)
+
 Now, go to your project, click on the image you want to annotate, and YOLO should automatically detect the objects.
+
+![image](https://github.com/user-attachments/assets/eb48710e-5d0e-44b4-a0e9-8af91a9b54ee)
+
 The result should look like this:
-Oh, and don't forget to activate both Auto-Annotation and Auto-Accept Suggestions. And yay, we've successfully set up auto annotation in Label Studio! You can explore more because YOLO not only does bounding boxes but also other tasks. You can see 👉 here.
+
+![image](https://github.com/user-attachments/assets/4711c771-5133-4191-a170-96c751d7e51f)
+
+Oh, and don't forget to activate both Auto-Annotation and Auto-Accept Suggestions. And yay, we've successfully set up auto annotation in Label Studio! You can explore more because YOLO not only does bounding boxes but also other tasks. You can see 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/yolo#classification-using-choices).
+
 When you're done using the YOLO model, you can shut down the container to save resources. Make sure you're in the yolo directory.
+
+```
 cd label-studio-ml-backend/label_studio_ml/examples/yolo
+```
+
 then run:
+
+```
 docker-compose down
+```
+
 And if you want to run the container again, you can type the following command:
+
+```
 docker-compose up
+```
+
 Don't forget to reconnect the model to Label Studio by going to Settings → Model → Edit → Validate and Save.
-Bonus: Using a Custom YOLO Model
-Make sure your custom YOLO model is saved in .pt format (this is the standard format for PyTorch models). For example, let's say your model file is named my_custom_model.pt.
-Create a Models Folder
-Inside the YOLO project folder (where your docker-compose.yml file is located), create a new folder named models if it doesn't already exist. Place your model file (my_custom_model.pt) inside this folder.
+
+### Bonus: Using a Custom YOLO Model
+Make sure your custom YOLO model is saved in `.pt` format (this is the standard format for PyTorch models). For example, let's say your model file is named `my_custom_model.pt`.
+
+#### Create a Models Folder
+Inside the YOLO project folder (where your `docker-compose.yml` file is located), create a new folder named models if it doesn't already exist. Place your model file (`my_custom_model.pt`) inside this folder.
+
+```
 yolo/
 ├── docker-compose.yml
 ├── models/
     └── my_custom_model.pt
-Edit docker-compose.yml File Add volume settings to allow Docker to access your model file. Add the following line (if it's not already there) in the volumes section of the docker-compose.yml file:
+```
+
+Edit `docker-compose.yml` File Add volume settings to allow Docker to access your model file. Add the following line (if it's not already there) in the volumes section of the `docker-compose.yml` file:
+
+```yml
 services:
   yolo:
     container_name: yolo
@@ -708,21 +812,33 @@ services:
     environment:
       - ALLOW_CUSTOM_MODEL_PATH=true  # Aktifkan custom model
     ...
-Ensure that the environment variables are correct. You need to configure some environment variables in the docker-compose.yml file:
-ALLOW_CUSTOM_MODEL_PATH=true: This gives permission to the Label Studio backend to read the model from a custom path
-LABEL_STUDIO_URL: Fill in your Label Studio URL. If everything is running locally, use:
+```
 
+Ensure that the environment variables are correct. You need to configure some environment variables in the `docker-compose.yml` file:
+
+* `ALLOW_CUSTOM_MODEL_PATH=true`: This gives permission to the Label Studio backend to read the model from a custom path
+* `LABEL_STUDIO_URL`: Fill in your Label Studio URL. If everything is running locally, use:
+
+```
 LABEL_STUDIO_URL=http://host.docker.internal:8080
-LABEL_STUDIO_API_KEY: You can get this API Key from your Label Studio account (top right corner). Copy the key and place it here.
-(Optional) LOG_LEVEL: If you want more detailed logs, you can set this to DEBUG.
+```
 
+* `LABEL_STUDIO_API_KEY`: You can get this API Key from your Label Studio account (top right corner). Copy the key and place it here.
+* (**Optional**) `LOG_LEVEL`: If you want more detailed logs, you can set this to `DEBUG`.
+
+```
 environment:
   - ALLOW_CUSTOM_MODEL_PATH=true
   - LABEL_STUDIO_URL=http://host.docker.internal:8080
   - LABEL_STUDIO_API_KEY=your_api_key
   - LOG_LEVEL=DEBUG  # (Opsional) Buat log detail
+```
+
 You need to inform Label Studio that you want to use your custom model for automatic predictions.
-In Label Studio, add the model_path parameter in the Labeling Interface when creating your project, for example, for Object Detection:
+
+In Label Studio, add the `model_path` parameter in the Labeling Interface when creating your project, for example, for Object Detection:
+
+```xml
 <View>
   <Image name="image" value="$image"/>
   <RectangleLabels 
@@ -733,6 +849,8 @@ In Label Studio, add the model_path parameter in the Labeling Interface when cre
     <Label value="Dog"/>
   </RectangleLabels>
 </View>
+```
+
 Remember, model_path: It should match the model file name and the file must be in the /app/models folder inside the Docker container. Mapping Class Names: Ensure that the names in <Label> match the classes your model predicts. If they don't match, add the predicted_values attribute. For example:
 <Label value="Cat" predicted_values="feline"/>
 <Label value="Dog" predicted_values="canine"/>
