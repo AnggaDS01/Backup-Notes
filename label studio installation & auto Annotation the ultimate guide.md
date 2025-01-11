@@ -108,7 +108,7 @@ For example, here's what it looks like for my laptop's GPU. Not too powerful, I 
 
 Simply click **Download**, wait for the download to complete, and then click the installer file. If you don't want to mess with configurations, just keep clicking **OK** and **Next**, and leave the settings as default. Sorry, I don't have screenshots for this because I've already installed it. Instead, you can check out this tutorial (hope it helps).
 
-[<img src="https://img.youtube.com/vi/Yd8IYK9NwJA/hqdefault.jpg"/>](https://www.youtube.com/embed/Yd8IYK9NwJA?t=220)
+[<img src="https://img.youtube.com/vi/Yd8IYK9NwJA/hqdefault.jpg"/>](https://www.youtube.com/embed/Yd8IYK9NwJA?t=220s)
 
 Focus on the installation duration. Note that the video is from 2022, so the UI on NVIDIA's website might look different in 2024. Once the NVIDIA driver is installed, confirm its installation by typing the following command in Powershell or CMD:
 
@@ -124,32 +124,57 @@ Now that your NVIDIA Driver is set up, let's move on to setting up WSL2 🐧!
 
 ---
 
-Setup WSL2
-Okay, after the NVIDIA driver is installed, let's move on to the next step: setting up WSL2 (Windows Subsystem for Linux 2). WSL2 is super important because we will be running Label Studio in a Linux environment, but still from Windows. In short, you get the Linux experience without needing a dual-boot.
+## Setup WSL2
+Okay, after the NVIDIA driver is installed, let's move on to the next step: setting up **WSL2** (Windows Subsystem for Linux 2). **WSL2** is super important because we will be running **Label Studio** in a Linux environment, but still from Windows. In short, you get the Linux experience without needing a dual-boot.
+
 Why WSL2?
 You might be wondering, why use WSL2? Here's the deal, bro, WSL2 is more advanced than the previous version (WSL1). The differences are:
-Performance: WSL2 uses the actual Linux kernel, so it's faster.
-GPU Support: This is the most important part! WSL2 supports GPU acceleration via CUDA.
-Windows-Linux Integration: You can access Windows files from Linux and vice versa.
+* **Performance: WSL2** uses the actual Linux kernel, so it's faster.
+* **GPU Support**: This is the most important part! **WSL2** supports GPU acceleration via **CUDA**.
+* **Windows-Linux Integration**: You can access Windows files from Linux and vice versa.
 
 Before setting up WSL2, there are a few things you need to do:
-Enable Developer Mode: Just search for it in the Windows menu by pressing the Windows button (⊞ Win), then type "Developer Settings", and switch it to "On".
+1. **Enable Developer Mode**: Just search for it in the Windows menu by pressing the Windows button **(⊞ Win)**, then type **"Developer Settings"**, and switch it to **"On"**.
 
-Gambar 3.1 Developer settingsFor newer versions of Windows (Windows 11 and some newer Windows 10), Developer Mode isn't that crucial because virtualization features are usually enabled by default. But if you are using an older version or run into errors during the WSL2 setup, this step will be a lifesaver. So, better safe than sorry!
+![image](https://github.com/user-attachments/assets/5229021f-8d59-4935-a46b-1d1044adfa96)
+
+For newer versions of Windows (Windows 11 and some newer Windows 10), Developer Mode isn't that crucial because virtualization features are usually enabled by default. But if you are using an older version or run into errors during the **WSL2** setup, this step will be a lifesaver. So, better safe than sorry!
+
 2. Then press the Windows button (⊞ Win), search for "Turn Windows features on or off", and select the menu that appears.
-Gambar 3.2 Menu "turn Windows features on or off"Check the boxes for "Virtual Machine Platform" and "Windows Subsystem for Linux", then click OK. After that, you'll be asked to restart your PC/laptop. Just follow the instructions and restart your device.
-Once done, open PowerShell or CMD in Windows and type the following:
+
+![image](https://github.com/user-attachments/assets/c959b20e-d171-44c3-806a-a988ec501427)
+
+Check the boxes for **"Virtual Machine Platform"** and **"Windows Subsystem for Linux"**, then click **OK**. After that, you'll be asked to restart your PC/laptop. Just follow the instructions and restart your device.
+
+Once done, open **PowerShell** or **CMD** in Windows and type the following:
+
+```bash
 wsl
+```
+
 If the output is like this:
+
+```
 Windows Subsystem for Linux has no installed distributions.
+```
+
+```bash
 Use 'wsl.exe --list --online' to list available distributions
 and 'wsl.exe --install <Distro>' to install.
 Distributions can also be installed by visiting the Microsoft Store:
 https://aka.ms/wslstore
 Error code: Wsl/Service/CreateInstance/GetDefaultDistro/WSL_E_DEFAULT_DISTRO_NOT_FOUND
-This means the Linux distro (OS distribution) is not installed yet. Now, check the WSL version by typing:
+```
+
+This means the Linux distro (OS distribution) is not installed yet. Now, check the **WSL** version by typing:
+
+```bash
 wsl --version
+```
+
 The output will tell you the version:
+
+```
 WSL version: 2.2.4.0
 Kernel version: 5.15.153.1-2
 WSLg version: 1.0.61
@@ -157,111 +182,250 @@ MSRDC version: 1.2.5326
 Direct3D version: 1.611.1-81528511
 DXCore version: 10.0.26091.1-240325-1447.ge-release
 Windows version: 10.0.19045.5131
-Now, if the WSL version is not 2.x.x.x, that means your WSL is not on version 2 yet. Upgrading to version 2 is super easy, just type:
+```
+
+Now, if the WSL version is not `2.x.x.x`, that means your WSL is not on version **2** yet. Upgrading to version **2** is super easy, just type:
+
+```
 wsl --set-default-version 2
-But if you've already typed the command above and the version is still at 1.x.x.x, try looking it up on YouTube or researching "why WSL isn't upgrading to version 2". Once you figure that out, we can move on to the next step.
-Now that WSL2 is set up, we still need to install the Linux distro in Windows, because frameworks like TensorFlow or PyTorch only support Ubuntu, so we'll install Ubuntu.
-Here's how: Press the Windows button (⊞ Win), then type "Microsoft Store" in the search bar, and search for "Ubuntu".
-Gambar 3.3 Tampilan Ubuntu di Microsoft StoreChoose the one with no version number in the title because that's the latest and most stable version, then just install it. Click "Open" once it's done downloading. You will be asked to create a username and password. This is to set up your Linux environment in Windows. So, the username and password you create will actually be your Linux system credentials. You'll need them every time you access WSL2 through the terminal.
+```
+
+But if you've already typed the command above and the version is still at `1.x.x.x`, try looking it up on YouTube or researching **"why WSL isn't upgrading to version 2"**. Once you figure that out, we can move on to the next step.
+
+Now that **WSL2** is set up, we still need to install the Linux distro in Windows, because frameworks like **TensorFlow** or **PyTorch** only support Ubuntu, so we'll install **Ubuntu**.
+
+Here's how: Press the Windows button **(⊞ Win)**, then type **"Microsoft Store"** in the search bar, and search for **"Ubuntu"**.
+
+![image](https://github.com/user-attachments/assets/3e69194d-107d-4738-a264-c13151031881)
+
+Choose the one with no version number in the title because that's the latest and most stable version, then just install it. Click **"Open"** once it's done downloading. You will be asked to create a username and password. This is to set up your Linux environment in Windows. So, the username and password you create will actually be your Linux system credentials. You'll need them every time you access **WSL2** through the terminal.
+
 For example, if you need to install a package or do something that requires admin permission, you will be asked to enter this password. So, make sure you remember it well, bro, don't just type anything!
+
 Now that you have Ubuntu on Windows, every time you want to access Ubuntu in Windows, you'll need to go to PowerShell/CMD and type wsl. If you want to check the version of Ubuntu, you can type:
+
+```bash
 lsb_release -a
+```
+
 output:
+
+```
 No LSB modules are available.
 Distributor ID: Ubuntu
 Description:    Ubuntu 24.04.1 LTS
 Release:        24.04
 Codename:       noble
-This is the version of Ubuntu I have, as of the time this article was written.
-Okay, before we move on to the next step, we need to update and upgrade the packages in Ubuntu. Why? Because when you first install WSL2, the Ubuntu you get is really fresh, like a default setup. So, many packages inside it might not have been updated or might not even be installed at all. It's like buying a new phone, but the apps are all in their old versions - they need to be updated first to make sure the features are working well, right?
+```
+
+This is the version of **Ubuntu** I have, as of the time this article was written.
+
+Okay, before we move on to the next step, we need to **update** and **upgrade** the packages in **Ubuntu**. Why? Because when you first install **WSL2**, the Ubuntu you get is really fresh, like a default setup. So, many packages inside it might not have been updated or might not even be installed at all. It's like buying a new phone, but the apps are all in their old versions - they need to be updated first to make sure the features are working well, right?
+
 The same goes here. You need to update the package list so the system knows which updates are available, and then upgrade so all the applications are up to date. This is super important, bro, especially if you plan to install frameworks like TensorFlow or PyTorch later.
+
 First, type this in your Ubuntu terminal:
+
+```bash
 cd ~
-This means you're going to the root directory in Ubuntu. Actually, it's not mandatory, but when you enter Linux via the terminal and type wsl, you're actually not in a Linux environment but in Windows. Confused? 😅 Let me show you the picture.
-Gambar 3.4 tampilan ketika mengetik "wsl" di terminalYou can see for yourself, the path /mnt/c/Users/user is still in Windows, so if you want to download a file from the outside, for example from Google, it will eventually be in the user folder here (I named my laptop user, yours will be different). Once done, you can type:
+```
+
+This means you're going to the root directory in **Ubuntu**. Actually, it's not mandatory, but when you enter Linux via the terminal and type `wsl`, you're actually not in a Linux environment but in Windows. Confused? 😅 Let me show you the picture.
+
+![image](https://github.com/user-attachments/assets/41e84fb0-bcb1-4bdc-87b5-445a913d3b9f)
+
+You can see for yourself, the path `/mnt/c/Users/user` is still in Windows, so if you want to download a file from the outside, for example from Google, it will eventually be in the user folder here (I named my laptop user, yours will be different). Once done, you can type:
+
+```bash
 sudo su
+```
+
 So, this helps you enter admin mode, so you have full access to make changes or installations in your Ubuntu system. It's like you're the "boss level" who can manage everything without any restrictions. This mode is super important if you want to install packages or edit system files that are usually restricted to administrators.
-Now, to update and upgrade your packages, you can type:
+
+Now, to **update** and **upgrade** your packages, you can type:
+
+```bash
 apt update && apt upgrade -y
+```
+
 Then wait until it finishes, usually it doesn't take long, depending on your internet speed. Next, let's move on to the step to install Docker Desktop for Windows 🐋.
 
 ---
 
-Install Docker
+## Install Docker
 Next, you need to install Docker. You can watch this video for the installation process. I recommend watching it until the end first, before practicing, or check out 👉 this documentation, it's very complete.
 
-Video 4.1 Cara install Docker Desktop di WindowsIMPORTANT❗: If some of the steps for installing Docker Desktop above have already been done in the previous steps of this article, don't do them again. Just do them once (for example: enabling virtual machine in Windows, WSL, and so on).
-Once it's installed, open Docker Desktop from the Windows menu, then go to Settings >> Resources >> WSL Integration, and enable it according to the Linux distribution you chose. For example, if I'm using Ubuntu, then enable that.
-Gambar 4.1 Icon setting di Docker DesktopGambar 4.2 Cara mengaktifkan WSL integration di Docker DesktopOnce you're done, let's move on to the next step: installing Miniconda 🐍.
+[<img src="https://img.youtube.com/vi/ZyBBv1JmnWQ/hqdefault.jpg"/>](https://www.youtube.com/embed/ZyBBv1JmnWQ)
+
+> IMPORTANT❗: If some of the steps for installing Docker Desktop above have already been done in the previous steps of this article, don't do them again. Just do them once (for example: enabling virtual machine in Windows, WSL, and so on).
+
+Once it's installed, open **Docker Desktop** from the Windows menu, then go to **`Settings >> Resources >> WSL Integration`**, and enable it according to the Linux distribution you chose. For example, if I'm using Ubuntu, then enable that.
+
+![image](https://github.com/user-attachments/assets/3e56a1ac-b841-49f5-9a64-12f79d5435d5)
+
+![image](https://github.com/user-attachments/assets/50204f93-24ce-43a1-9e40-0a9166887ce2)
+
+Once you're done, let's move on to the next step: installing Miniconda 🐍.
 
 ---
 
-Install Miniconda in the WSL2 Distro
+## Install Miniconda in the WSL2 Distro
 Before we get into the installation steps for Miniconda, there's something important to check. Since we've already installed Ubuntu and Docker, we need to make sure that the default WSL points to Ubuntu, not Docker. Why? Because if the default is set to Docker, when you type the wslcommand, you'll end up in Docker instead of Ubuntu.
+
 It's easy to check. Type the following command in Powershell/CMD:
+
+```bash
 wsl --list --verbose
+```
+
 If the default WSL still points to Docker, the output will look like this:
+
+```
 NAME              STATE           VERSION  
 * docker-desktop    Stopped         2  
   Ubuntu            Running         2
-Look for the asterisk (*) next to docker-desktop? That means Docker is currently the default WSL. To change it so the default is Ubuntu, just type the following command:
+```
+
+Look for the asterisk (*) next to **docker-desktop**? That means Docker is currently the default **WSL**. To change it so the default is **Ubuntu**, just type the following command:
+
+```bash
 wsl --set-default Ubuntu
+```
+
 Then, check again with the same command:
+
+```bash
 wsl --list --verbose
+```
+
 Now, the output should look like this:
+
+```
 NAME              STATE           VERSION  
 * Ubuntu            Running         2  
   docker-desktop    Stopped         2
-The asterisk (*) next to Ubuntu indicates that Ubuntu is now the default WSL. With this, every time you type wsl, you will directly enter Ubuntu, not Docker.
-Now, let's move on to the next important part, which is installing Miniconda. You might be asking, "Why use Miniconda instead of Anaconda, or why not just install the packages directly using pip?"
-The answer is that Miniconda is lighter than Anaconda, and both Miniconda and Anaconda are like "logistics managers" for managing all your Python library needs in Ubuntu. With Miniconda, you can create a virtual environment specifically for your project. So, if you want to install TensorFlow, PyTorch, or other libraries with different versions for your project needs, they won't overlap or cause conflicts. You can also easily install the Python version you need using the conda prompt when setting up a virtual environment. This keeps everything neat and safe, and we will use this method to create a separate environment when installing Label Studio.
-A simple analogy: Miniconda is like having a separate toolbox for each project. So, if you're working on project "A", you only open the toolbox for that project. The tools won't get mixed up with the toolbox for project "B". Convenient, right?
-Okay, before we move on to the installation process, make sure you've already done the "update" and "upgrade" for your Ubuntu as we discussed earlier. Once done, let's proceed with the command to download the Miniconda installer. Ensure you're in the root path of Linux by typing the following command:
+```
+
+The asterisk (*) next to Ubuntu indicates that Ubuntu is now the default WSL. With this, every time you type `wsl`, you will directly enter Ubuntu, not Docker.
+
+Now, let's move on to the next important part, which is installing **Miniconda**. You might be asking, "Why use Miniconda instead of Anaconda, or why not just install the packages directly using `pip`?"
+
+The answer is that **Miniconda** is lighter than **Anaconda**, and both **Miniconda** and **Anaconda** are like "logistics managers" for managing all your Python library needs in Ubuntu. With **Miniconda**, you can create a virtual environment specifically for your project. So, if you want to install **TensorFlow**, **PyTorch**, or other libraries with **different versions** for your project needs, they won't overlap or cause conflicts. You can also easily install the Python version you need using the **conda prompt** when setting up a virtual environment. This keeps everything neat and safe, and we will use this method to create a separate environment when installing **Label Studio**.
+
+A simple analogy: **Miniconda** is like having a separate toolbox for each project. So, if you're working on project "A", you only open the toolbox for that project. The tools won't get mixed up with the toolbox for project "B". Convenient, right?
+
+Okay, before we move on to the installation process, make sure you've already done the **"update"** and **"upgrade"** for your Ubuntu as we discussed earlier. Once done, let's proceed with the command to download the **Miniconda installer**. Ensure you're in the **root path** of Linux by typing the following command:
+
+```
 cd ~
-This ensures the file you download is stored in the root of Linux, not in Windows. Then type sudo su in the Ubuntu terminal, but if you've already used sudo su, you don't need to do it again. To download Miniconda, type the following command:
+```
+
+This ensures the file you download is stored in the root of Linux, not in Windows. Then type `sudo su` in the Ubuntu terminal, but if you've already used sudo su, you don't need to do it again. To download Miniconda, type the following command:
+
+```bash
 curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o Miniconda3-latest-Linux-x86_64.sh
+```
+
 This command will download the latest version of the Miniconda installer directly from their official repository. So, you don't have to worry about security or outdated versions. After downloading Miniconda using the previous command, make sure the Miniconda installer file is located in the root of your Ubuntu. To check, type ls in the terminal. If the file isn't there, the next command won't work because it won't find the installer file.
+
 Next, you'll run the installation script. It's really simple, just type this command in your Ubuntu terminal:
+
+```bash
 bash Miniconda3-latest-Linux-x86_64.sh
+```
+
 When you execute this command, the installation process will begin, and you'll see several prompts that need to be answered. Here's the explanation for each prompt in case they appear:
+
+```
 Do you accept the license terms? [yes|no]
-This one appears because Miniconda wants to confirm that you agree with its license terms. No worries, nothing strange here. Just type yes and press Enter. Next, if you see:
+```
+
+This one appears because **Miniconda** wants to confirm that you agree with its license terms. No worries, nothing strange here. Just type yes and press **Enter**. Next, if you see:
+
+```
 You can undo this by running `conda init --reverse $SHELL`? [yes|no]
-This is to set up Miniconda automatically on your shell. So, if you type conda in the terminal, it will be recognized. Again, just type yes here to have everything set up automatically without any hassle.
-IMPORTANT❗: After installation is complete, you must restart your terminal for all the changes to take effect. It's simple: just exit the terminal by typing exit, then open the terminal again and run wsl.
+```
+
+This is to set up **Miniconda** automatically on your shell. So, if you type **conda** in the terminal, it will be recognized. Again, just type yes here to have everything set up automatically without any hassle.
+
+> IMPORTANT❗: After installation is complete, you must restart your terminal for all the changes to take effect. It's simple: just exit the terminal by typing `exit`, then open the terminal again and run `wsl`.
+
 If everything goes well, you'll see (base) next to your username in the terminal. This means Miniconda is active, and you now have the base environment set as default. From here, you're ready to create specific environments based on your needs… 👌
-Gambar 5.1 Tampilan terminal linux yang sudah ter-install MinicondaIf it doesn't show up, try going over the previous steps again, because we need Miniconda to set up environments with specific versions of Python. To confirm if Conda is installed, type this command:
+
+![image](https://github.com/user-attachments/assets/10fef643-bfdf-4704-b6c7-c27bd4a60252)
+
+If it doesn't show up, try going over the previous steps again, because we need Miniconda to set up environments with specific versions of Python. To confirm if Conda is installed, type this command:
+
+```
 conda --version
-Gambar 5.2 Tampilan versi dari Miniconda di terminal LinuxMy conda version is 24.9.2, as of when this article was written. And that's it, we've installed Miniconda, now let's move on to installing Label Studio 🚀.
+```
+
+![image](https://github.com/user-attachments/assets/74c097be-c978-4627-94df-71d749821cbc)
+
+My conda version is `24.9.2`, as of when this article was written. And that's it, we've installed **Miniconda**, now let's move on to installing **Label Studio** 🚀.
 
 ---
 
-Install Label Studio
-Alright, now that the Miniconda setup is done, it's time to install Label Studio on our Ubuntu. But before that, we need to create a virtual environment. Why? To prevent any dependencies for Label Studio from conflicting with other projects you might be working on in the same system. This virtual environment is like a "private space" for specific applications, so everything stays neat and safe.
+## Install Label Studio
+Alright, now that the **Miniconda** setup is done, it's time to install **Label Studio** on our Ubuntu. But before that, we need to create a **virtual environment**. Why? To prevent any dependencies for **Label Studio** from conflicting with other projects you might be working on in the same system. This virtual environment is like a **"private space"** for specific applications, so everything stays neat and safe.
+
 The steps are simple:
+
 1. Create a Virtual Environment by typing the following command in your terminal:
+
+```bash
 conda create -n label_studio python=3.11 -y
+```
+
 This command will create a new environment named label_studio with Python version 3.11. Don't forget to activate this environment before moving forward:
+
+```bash
 conda activate label_studio
-Once you run the above command, you should see something like the one below. You'll notice that the Ubuntu username changes from base to label_studio, which means your virtual environment is now active.
-Gambar 6.1 Tampilan ketika venv label_studio aktifNext, upgrade pip by typing the following command:
+```
+
+Once you run the above command, you should see something like the one below. You'll notice that the **Ubuntu username** changes from `base` to `label_studio`, which means your virtual environment is now active.
+
+![image](https://github.com/user-attachments/assets/2795525a-1581-4bf7-bda7-592feba6ad1c)
+
+Next, upgrade pip by typing the following command:
+
+```
 pip install --upgrade pip
-2. Install Label Studio
+```
+
+2. **Install Label Studio**
 After the environment is active, you can install Label Studio with:
+
+```
 pip install -U label-studio
+```
+
 Wait for the installation to finish. Once it's done, you can check if Label Studio was successfully installed with this command:
+
+```
 label-studio --version
-3. Jalankan Label Studio
-If the installation was successful, you can directly run Label Studio with:
+```
+
+3. **Jalankan Label Studio**
+If the installation was successful, you can directly run **Label Studio** with:
+
+```
 label-studio
-This will automatically open the Label Studio app in your browser. You can use Chrome, but I usually use Microsoft Edge. From here, you can start exploring and setting up your first project. The default port for Label Studio is 8080, so just type that in the address bar of your browser.
-Gambar 6.2 Tampilan address bar untuk akses Label StudioIf this is your first time installing, you'll be asked to sign up. Just follow the instructions, and once you're done, you can play around with a small dataset to get a feel for it. If you want to dive deeper into using it, you can check the guide 👉 here.
-Oh, and if you're still curious about the installation process, and whether it can be installed without pip, you can visit the site 👉 here. Also, if you want to change the default port, check out the documentation 👉 here However, as I mentioned at the start of this article, the Label Studio documentation isn't very detailed, so you'll need to explore on your own, which means trial and error - just like I did when creating this tutorial.
-Next, I'll discuss how to set up local storage access in Label Studio. Let's move on to the next step!
+```
+
+This will automatically open the **Label Studio** app in your browser. You can use **Chrome**, but I usually use **Microsoft Edge**. From here, you can start exploring and setting up your first project. The default port for **Label Studio** is 8080, so just type that in the address bar of your browser.
+
+![image](https://github.com/user-attachments/assets/5311d984-63da-46dd-baab-1dec4462bf55)
+
+If this is your first time installing, you'll be asked to sign up. Just follow the instructions, and once you're done, you can play around with a small dataset to get a feel for it. If you want to dive deeper into using it, you can check the guide 👉 [**here**](https://labelstud.io/guide/labeling).
+
+Oh, and if you're still curious about the installation process, and whether it can be installed without pip, you can visit the site 👉 [**here**](https://labelstud.io/guide/install.html). Also, if you want to change the default port, check out the documentation 👉 [**here**](https://labelstud.io/guide/start#Run-Label-Studio-on-localhost-with-a-different-port). However, as I mentioned at the start of this article, the Label Studio documentation isn't very detailed, so you'll need to explore on your own, which means trial and error - just like I did when creating this tutorial.
+
+Next, I'll discuss how to set up **local storage access** in **Label Studio**. Let's move on to the next step!
 
 ---
 
-Setup Local Storage di Label Studio
+## Setup Local Storage di Label Studio
 At this point, Label Studio is ready to use. But there's one important thing we need to set up, especially if you have a large and extensive dataset: Local Storage.
 Why is Local Storage important? Because if you directly upload a huge dataset to Label Studio, it can result in errors. For example, you might see an error like this:
 Gambar 7.1 Tampilan ketika data yang di-import terlalu banyakAs you can see, there's an error message in red, telling you that the uploaded file is too large. So, what's the solution? Do we need to upload it gradually? Sure, but that would be super inefficient. That's why I'm going to share a tip on how to handle errors like the one shown above.
