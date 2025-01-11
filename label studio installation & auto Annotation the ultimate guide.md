@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/8d6f8e3c-3fff-418c-94a8-3ca02a76dfb1)# Label Studio Installation & Auto Annotation: The Ultimate Guide
+# Label Studio Installation & Auto Annotation: The Ultimate Guide
 
 ![image](https://github.com/user-attachments/assets/4ca4f684-fded-4060-a78c-a1a568337ce8)
 
