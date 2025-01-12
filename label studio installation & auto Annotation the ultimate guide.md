@@ -1129,4 +1129,4 @@ And if you want to run the container again, you can type the following command:
 docker-compose up
 ```
 
-Don't forget to reconnect the model to Label Studio by going to `Settings → Model → Edit → Validate and Save`.
+Don't forget to reconnect the model to Label Studio by going to `Settings >> Model >> Edit >> Validate and Save`.
