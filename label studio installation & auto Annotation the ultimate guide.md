@@ -89,6 +89,7 @@ Think of the **NVIDIA Driver** as the "communication brain" between your operati
 
 ### Steps to Set Up NVIDIA Driver
 Alright, now let's dive into the detailed steps. Don't worry, bro, it's easy as long as you follow the steps one by one.
+
 First, you need to download the NVIDIA driver that matches your GPU. Go directly to NVIDIA's official website:
 👉 [**NVIDIA Driver**](https://www.nvidia.com/en-us/drivers/).
 
@@ -110,17 +111,17 @@ Simply click **Download**, wait for the download to complete, and then click the
 
 [<img src="https://img.youtube.com/vi/Yd8IYK9NwJA/hqdefault.jpg"/>](https://www.youtube.com/embed/Yd8IYK9NwJA?t=220s)
 
-Focus on the installation duration. Note that the video is from 2022, so the UI on NVIDIA's website might look different in 2024. Once the NVIDIA driver is installed, confirm its installation by typing the following command in Powershell or CMD:
+Focus on the installation duration. Note that the video is from 2022, so the UI on NVIDIA's website might look different in 2024. Once the NVIDIA driver is installed, confirm its installation by typing the following command in **Powershell** or **CMD**:
 
 ```bash
 nvidia-smi
 ```
 
-If you see an output like this, it means your NVIDIA driver is successfully installed:
+If you see an output like this, it means your **NVIDIA driver is successfully installed**:
 
 ![image](https://github.com/user-attachments/assets/dd65588e-28fb-4153-b2ca-b5af550cc92f)
 
-Now that your NVIDIA Driver is set up, let's move on to setting up WSL2 🐧!
+Now that your **NVIDIA Driver** is set up, let's move on to setting up **WSL2** 🐧!
 
 ---
 
@@ -128,19 +129,20 @@ Now that your NVIDIA Driver is set up, let's move on to setting up WSL2 🐧!
 Okay, after the NVIDIA driver is installed, let's move on to the next step: setting up **WSL2** (Windows Subsystem for Linux 2). **WSL2** is super important because we will be running **Label Studio** in a Linux environment, but still from Windows. In short, you get the Linux experience without needing a dual-boot.
 
 Why WSL2?
-You might be wondering, why use WSL2? Here's the deal, bro, WSL2 is more advanced than the previous version (WSL1). The differences are:
+You might be wondering, why use **WSL2**? Here's the deal, bro, **WSL2** is more advanced than the previous version (**WSL1**). The differences are:
 * **Performance: WSL2** uses the actual Linux kernel, so it's faster.
 * **GPU Support**: This is the most important part! **WSL2** supports GPU acceleration via **CUDA**.
 * **Windows-Linux Integration**: You can access Windows files from Linux and vice versa.
 
-Before setting up WSL2, there are a few things you need to do:
+Before setting up **WSL2**, there are a few things you need to do:
+
 1. **Enable Developer Mode**: Just search for it in the Windows menu by pressing the Windows button **(⊞ Win)**, then type **"Developer Settings"**, and switch it to **"On"**.
 
 ![image](https://github.com/user-attachments/assets/5229021f-8d59-4935-a46b-1d1044adfa96)
 
 For newer versions of Windows (Windows 11 and some newer Windows 10), Developer Mode isn't that crucial because virtualization features are usually enabled by default. But if you are using an older version or run into errors during the **WSL2** setup, this step will be a lifesaver. So, better safe than sorry!
 
-2. Then press the Windows button (⊞ Win), search for "Turn Windows features on or off", and select the menu that appears.
+2. Then press the Windows button **(⊞ Win)**, search for "**Turn Windows features on or off**", and select the menu that appears.
 
 ![image](https://github.com/user-attachments/assets/c959b20e-d171-44c3-806a-a988ec501427)
 
@@ -154,11 +156,9 @@ wsl
 
 If the output is like this:
 
-```
-Windows Subsystem for Linux has no installed distributions.
-```
-
 ```bash
+Windows Subsystem for Linux has no installed distributions.
+
 Use 'wsl.exe --list --online' to list available distributions
 and 'wsl.exe --install <Distro>' to install.
 Distributions can also be installed by visiting the Microsoft Store:
@@ -202,7 +202,7 @@ Choose the one with no version number in the title because that's the latest and
 
 For example, if you need to install a package or do something that requires admin permission, you will be asked to enter this password. So, make sure you remember it well, bro, don't just type anything!
 
-Now that you have Ubuntu on Windows, every time you want to access Ubuntu in Windows, you'll need to go to PowerShell/CMD and type wsl. If you want to check the version of Ubuntu, you can type:
+Now that you have **Ubuntu** on Windows, every time you want to access Ubuntu in Windows, you'll need to go to **PowerShell/CMD** and type `wsl`. If you want to check the version of **Ubuntu**, you can type:
 
 ```bash
 lsb_release -a
@@ -222,9 +222,9 @@ This is the version of **Ubuntu** I have, as of the time this article was writte
 
 Okay, before we move on to the next step, we need to **update** and **upgrade** the packages in **Ubuntu**. Why? Because when you first install **WSL2**, the Ubuntu you get is really fresh, like a default setup. So, many packages inside it might not have been updated or might not even be installed at all. It's like buying a new phone, but the apps are all in their old versions - they need to be updated first to make sure the features are working well, right?
 
-The same goes here. You need to update the package list so the system knows which updates are available, and then upgrade so all the applications are up to date. This is super important, bro, especially if you plan to install frameworks like TensorFlow or PyTorch later.
+The same goes here. You need to update the package list so the system knows which updates are available, and then upgrade so all the applications are up to date. This is super important, bro, especially if you plan to install frameworks like **TensorFlow** or **PyTorch** later.
 
-First, type this in your Ubuntu terminal:
+First, type this in your **Ubuntu** terminal:
 
 ```bash
 cd ~
@@ -234,13 +234,13 @@ This means you're going to the root directory in **Ubuntu**. Actually, it's not 
 
 ![image](https://github.com/user-attachments/assets/41e84fb0-bcb1-4bdc-87b5-445a913d3b9f)
 
-You can see for yourself, the path `/mnt/c/Users/user` is still in Windows, so if you want to download a file from the outside, for example from Google, it will eventually be in the user folder here (I named my laptop user, yours will be different). Once done, you can type:
+You can see for yourself, the path `/mnt/c/Users/user` is still in Windows, so if you want to download a file from the outside, for example from Google, it will eventually be in the `user` folder here (I named my laptop user, yours will be different). Once done, you can type:
 
 ```bash
 sudo su
 ```
 
-So, this helps you enter admin mode, so you have full access to make changes or installations in your Ubuntu system. It's like you're the "boss level" who can manage everything without any restrictions. This mode is super important if you want to install packages or edit system files that are usually restricted to administrators.
+So, this helps you enter admin mode, so you have full access to make changes or installations in your **Ubuntu** system. It's like you're the "boss level" who can manage everything without any restrictions. This mode is super important if you want to install packages or edit system files that are usually restricted to administrators.
 
 Now, to **update** and **upgrade** your packages, you can type:
 
@@ -248,7 +248,7 @@ Now, to **update** and **upgrade** your packages, you can type:
 apt update && apt upgrade -y
 ```
 
-Then wait until it finishes, usually it doesn't take long, depending on your internet speed. Next, let's move on to the step to install Docker Desktop for Windows 🐋.
+Then wait until it finishes, usually it doesn't take long, depending on your internet speed. Next, let's move on to the step to install **Docker Desktop for Windows** 🐋.
 
 ---
 
@@ -257,7 +257,7 @@ Next, you need to install Docker. You can watch this video for the installation 
 
 [<img src="https://img.youtube.com/vi/ZyBBv1JmnWQ/hqdefault.jpg"/>](https://www.youtube.com/embed/ZyBBv1JmnWQ)
 
-> IMPORTANT❗: If some of the steps for installing Docker Desktop above have already been done in the previous steps of this article, don't do them again. Just do them once (for example: enabling virtual machine in Windows, WSL, and so on).
+> IMPORTANT❗: If some of the steps for installing **Docker Desktop** above have already been done in the previous steps of this article, don't do them again. Just do them once (for example: enabling virtual machine in Windows, WSL, and so on).
 
 Once it's installed, open **Docker Desktop** from the Windows menu, then go to **`Settings >> Resources >> WSL Integration`**, and enable it according to the Linux distribution you chose. For example, if I'm using Ubuntu, then enable that.
 
@@ -265,14 +265,14 @@ Once it's installed, open **Docker Desktop** from the Windows menu, then go to *
 
 ![image](https://github.com/user-attachments/assets/50204f93-24ce-43a1-9e40-0a9166887ce2)
 
-Once you're done, let's move on to the next step: installing Miniconda 🐍.
+Once you're done, let's move on to the next step: installing **Miniconda** 🐍.
 
 ---
 
 ## Install Miniconda in the WSL2 Distro
-Before we get into the installation steps for Miniconda, there's something important to check. Since we've already installed Ubuntu and Docker, we need to make sure that the default WSL points to Ubuntu, not Docker. Why? Because if the default is set to Docker, when you type the wslcommand, you'll end up in Docker instead of Ubuntu.
+Before we get into the installation steps for **Miniconda**, there's something important to check. Since we've already installed **Ubuntu** and **Docker**, we need to make sure that the default WSL points to **Ubuntu**, not Docker. Why? Because if the default is set to Docker, when you type the wslcommand, you'll end up in Docker instead of Ubuntu.
 
-It's easy to check. Type the following command in Powershell/CMD:
+It's easy to check. Type the following command in **Powershell/CMD**:
 
 ```bash
 wsl --list --verbose
@@ -306,7 +306,7 @@ NAME              STATE           VERSION
   docker-desktop    Stopped         2
 ```
 
-The asterisk (*) next to Ubuntu indicates that Ubuntu is now the default WSL. With this, every time you type `wsl`, you will directly enter Ubuntu, not Docker.
+The asterisk (*) next to **Ubuntu** indicates that Ubuntu is now the default WSL. With this, every time you type `wsl`, you will directly enter Ubuntu, not Docker.
 
 Now, let's move on to the next important part, which is installing **Miniconda**. You might be asking, "Why use Miniconda instead of Anaconda, or why not just install the packages directly using `pip`?"
 
@@ -320,13 +320,13 @@ Okay, before we move on to the installation process, make sure you've already do
 cd ~
 ```
 
-This ensures the file you download is stored in the root of Linux, not in Windows. Then type `sudo su` in the Ubuntu terminal, but if you've already used sudo su, you don't need to do it again. To download Miniconda, type the following command:
+This ensures the file you download is stored in the root of Linux, not in Windows. Then type `sudo su` in the Ubuntu terminal, but if you've already used `sudo su`, you don't need to do it again. To download **Miniconda**, type the following command:
 
 ```bash
 curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o Miniconda3-latest-Linux-x86_64.sh
 ```
 
-This command will download the latest version of the Miniconda installer directly from their official repository. So, you don't have to worry about security or outdated versions. After downloading Miniconda using the previous command, make sure the Miniconda installer file is located in the root of your Ubuntu. To check, type ls in the terminal. If the file isn't there, the next command won't work because it won't find the installer file.
+This command will download the latest version of the **Miniconda** installer directly from their official repository. So, you don't have to worry about security or outdated versions. After downloading Miniconda using the previous command, make sure the **Miniconda installer file** is located in the **root** of your Ubuntu. To check, type ls in the terminal. If the file isn't there, the next command won't work because it won't find the installer file.
 
 Next, you'll run the installation script. It's really simple, just type this command in your Ubuntu terminal:
 
@@ -350,11 +350,11 @@ This is to set up **Miniconda** automatically on your shell. So, if you type **c
 
 > IMPORTANT❗: After installation is complete, you must restart your terminal for all the changes to take effect. It's simple: just exit the terminal by typing `exit`, then open the terminal again and run `wsl`.
 
-If everything goes well, you'll see (base) next to your username in the terminal. This means Miniconda is active, and you now have the base environment set as default. From here, you're ready to create specific environments based on your needs… 👌
+If everything goes well, you'll see (`base`) next to your username in the terminal. This means **Miniconda** is active, and you now have the **base** environment set as default. From here, you're ready to create specific environments based on your needs… 👌
 
 ![image](https://github.com/user-attachments/assets/10fef643-bfdf-4704-b6c7-c27bd4a60252)
 
-If it doesn't show up, try going over the previous steps again, because we need Miniconda to set up environments with specific versions of Python. To confirm if Conda is installed, type this command:
+If it doesn't show up, try going over the previous steps again, because we need **Miniconda** to set up environments with specific versions of Python. To confirm if **Conda** is installed, type this command:
 
 ```
 conda --version
@@ -362,7 +362,7 @@ conda --version
 
 ![image](https://github.com/user-attachments/assets/74c097be-c978-4627-94df-71d749821cbc)
 
-My conda version is `24.9.2`, as of when this article was written. And that's it, we've installed **Miniconda**, now let's move on to installing **Label Studio** 🚀.
+My **conda** version is `24.9.2`, as of when this article was written. And that's it, we've installed **Miniconda**, now let's move on to installing **Label Studio** 🚀.
 
 ---
 
@@ -371,13 +371,13 @@ Alright, now that the **Miniconda** setup is done, it's time to install **Label 
 
 The steps are simple:
 
-1. Create a Virtual Environment by typing the following command in your terminal:
+1. **Create a Virtual Environment** by typing the following command in your terminal:
 
 ```bash
 conda create -n label_studio python=3.11 -y
 ```
 
-This command will create a new environment named label_studio with Python version 3.11. Don't forget to activate this environment before moving forward:
+This command will create a new environment named `label_studio` with Python version `3.11`. Don't forget to activate this environment before moving forward:
 
 ```bash
 conda activate label_studio
@@ -394,13 +394,13 @@ pip install --upgrade pip
 ```
 
 2. **Install Label Studio**
-After the environment is active, you can install Label Studio with:
+After the environment is active, you can install **Label Studio** with:
 
 ```
 pip install -U label-studio
 ```
 
-Wait for the installation to finish. Once it's done, you can check if Label Studio was successfully installed with this command:
+Wait for the installation to finish. Once it's done, you can check if **Label Studio** was successfully installed with this command:
 
 ```
 label-studio --version
@@ -419,7 +419,7 @@ This will automatically open the **Label Studio** app in your browser. You can u
 
 If this is your first time installing, you'll be asked to sign up. Just follow the instructions, and once you're done, you can play around with a small dataset to get a feel for it. If you want to dive deeper into using it, you can check the guide 👉 [**here**](https://labelstud.io/guide/labeling).
 
-Oh, and if you're still curious about the installation process, and whether it can be installed without pip, you can visit the site 👉 [**here**](https://labelstud.io/guide/install.html). Also, if you want to change the default port, check out the documentation 👉 [**here**](https://labelstud.io/guide/start#Run-Label-Studio-on-localhost-with-a-different-port). However, as I mentioned at the start of this article, the Label Studio documentation isn't very detailed, so you'll need to explore on your own, which means trial and error - just like I did when creating this tutorial.
+Oh, and if you're still curious about the installation process, and whether it can be installed without **pip**, you can visit the site 👉 [**here**](https://labelstud.io/guide/install.html). Also, if you want to change the default port, check out the documentation 👉 [**here**](https://labelstud.io/guide/start#Run-Label-Studio-on-localhost-with-a-different-port). However, as I mentioned at the start of this article, the Label Studio documentation isn't very detailed, so you'll need to explore on your own, which means trial and error - just like I did when creating this tutorial.
 
 Next, I'll discuss how to set up **local storage access** in **Label Studio**. Let's move on to the next step!
 
@@ -434,7 +434,7 @@ Why is Local Storage important? Because if you directly upload a huge dataset to
 
 As you can see, there's an error message in red, telling you that the uploaded file is too large. So, what's the solution? Do we need to upload it gradually? Sure, but that would be super inefficient. That's why I'm going to share a tip on how to handle errors like the one shown above.
 
-Instead of uploading the dataset directly, we can take advantage of Local Storage in Label Studio. This feature allows Label Studio to access your dataset stored on your computer without uploading everything. How convenient is that?
+Instead of uploading the dataset directly, we can take advantage of **Local Storage** in **Label Studio**. This feature allows **Label Studio** to access your dataset stored on your computer without uploading everything. How convenient is that?
 
 You might wonder, why not use cloud storage instead? The answer is that cloud storage usually comes with a cost, especially if your dataset is large. You might face additional charges for storage and data access, which can get expensive, especially for beginners or small teams with limited budgets. However, if you're not constrained by a budget, I'd recommend using cloud storage. If you want to learn how to connect cloud storage to **Label Studio**, you can check the documentation 👉 [**here**](https://labelstud.io/guide/storage).
 
@@ -446,7 +446,7 @@ Why use **Windows Terminal**? Because you can open a new tab within the terminal
 
 ![image](https://github.com/user-attachments/assets/9c34bf67-117c-457e-8389-8d1b80d61ecc)
 
-Next, open the **Ubuntu terminal** by typing wsl. Once the terminal is open, we need to create an **environment variable** in **Ubuntu**. Don't worry, you don't need to enter the `label_studio` virtual environment or run **Label Studio** just yet.
+Next, open the **Ubuntu terminal** by typing `wsl`. Once the terminal is open, we need to create an **environment variable** in **Ubuntu**. Don't worry, you don't need to enter the `label_studio` virtual environment or run **Label Studio** just yet.
 
 Before continuing, create a specific folder to store your dataset. You can name it however you like, depending on your needs. In my case, I created a folder like this:
 
@@ -546,7 +546,7 @@ The output should look like the image below:
 
 ![image](https://github.com/user-attachments/assets/7cacd520-761f-455a-bd47-1b57b1ff1dca)
 
-This means your variable has been saved to your system's environment. Once it's done, you just need to run Label Studio, making sure that the label_studio virtual environment is activated first. After that, you can run Label Studio by typing:
+This means your variable has been saved to your system's environment. Once it's done, you just need to run Label Studio, making sure that the `label_studio` virtual environment is activated first. After that, you can run Label Studio by typing:
 
 ```
 label-studio
@@ -560,11 +560,11 @@ After that, you can name the project based on your needs.
 
 ![image](https://github.com/user-attachments/assets/ee0999bd-63dd-446e-8086-e070a43c3042)
 
-Let's skip the Data Import part and go directly to the Labeling Setup. You can check out the template 👉 [**here**](https://labelstud.io/templates/).
+Let's skip the Data Import part and go directly to the **Labeling Setup**. You can check out the template 👉 [**here**](https://labelstud.io/templates/).
 
 ![image](https://github.com/user-attachments/assets/345b6950-9de5-4e28-a59f-b8bf06956077)
 
-You can choose according to your needs. In this example, I'm taking the object detection option.
+You can choose according to your needs. In this example, I'm taking the **object detection** option.
 
 ![image](https://github.com/user-attachments/assets/1ccad72c-b1a2-457e-8edb-d638e4d486a1)
 
@@ -572,11 +572,11 @@ In this section, you can add a label (no. 1) according to your needs and click A
 
 ![image](https://github.com/user-attachments/assets/60abe6d8-fa2d-4ea8-9cd8-79367e33258a)
 
-Now, the interface should look like the image above, with no data imported yet. To set up local storage, go to `Settings`.
+Now, the interface should look like the image above, with no data imported yet. To set up **local storage**, go to `Settings`.
 
 ![image](https://github.com/user-attachments/assets/adb7d195-2f79-4364-8c6c-14d2c64e4291)
 
-Then go to Cloud Storage.
+Then go to **Cloud Storage**.
 
 ![image](https://github.com/user-attachments/assets/3c7e2167-8a0d-43ee-9e70-5fbbd7102496)
 
@@ -625,11 +625,11 @@ And yes… we've successfully completed the **local storage setup** in Label Stu
 ---
 
 ## Setup Auto Annotation
-After setting up local storage, let's dive into a feature that will make your workflow even more efficient: Auto Annotation. Essentially, this feature turns Label Studio into a sort of "smart assistant" that can automatically create annotations based on the machine learning model we've prepared.
+After setting up local storage, let's dive into a feature that will make your workflow even more efficient: **Auto Annotation**. Essentially, this feature turns Label Studio into a sort of "smart assistant" that can automatically create annotations based on the machine learning model we've prepared.
 
-Okay, now we're going to go through the detailed steps to set up Auto Annotation using a pretrained model in Label Studio. Get your coffee ready, bro, because this step can get a bit technical, but I'll make sure it's easy to follow. Let's start!
+Okay, now we're going to go through the detailed steps to set up **Auto Annotation** using a pretrained model in Label Studio. Get your coffee ready, bro, because this step can get a bit technical, but I'll make sure it's easy to follow. Let's start!
 
-The first step is, of course, to run Label Studio in the terminal. Remember, you need to activate the virtual environment where Label Studio is installed, then run Label Studio by typing:
+The first step is, of course, to run Label Studio in the terminal. **Remember**, you need to activate the virtual environment where Label Studio is installed, then run Label Studio by typing:
 
 ```
 label-studio
@@ -651,7 +651,7 @@ It should look something like this:
 
 ![image](https://github.com/user-attachments/assets/35deb33a-cb3d-4733-8359-38b00decd647)
 
-You can see above that the repository has been cloned. Next, I'm going to give you some tutorials related to the models that can be used for auto annotation in Label Studio. `Make sure` that after you clone it, you enter the virtual environment that has Label Studio installed. For me:
+You can see above that the repository has been cloned. Next, I'm going to give you some tutorials related to the models that can be used for auto annotation in Label Studio. **Make sure** that after you clone it, you enter the virtual environment that has Label Studio installed. For me:
 
 ```
 conda activate label_studio
@@ -683,7 +683,7 @@ This means you want to open the `yolo` folder in **Visual Studio Code**. Once it
 
 Paste it in the `LABEL_STUDIO_API_KEY` section.
 
-```
+```yml
 version: "3.8"
 services:
     ...
@@ -699,7 +699,7 @@ For the `LABEL_STUDIO_URL`, just leave it as the default at port **8080**, as it
 
 Next, you can open the **Dockerfile** and pay attention to the following line of code in the Dockerfile:
 
-```
+```yml
 RUN conda install -c "nvidia/label/cuda-12.1.1" cuda -y
 ENV CUDA_HOME=/opt/conda \
     TORCH_CUDA_ARCH_LIST="6.0;6.1;7.0;7.5;8.0;8.6+PTX;8.9;9.0"
@@ -712,17 +712,17 @@ FROM pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime
 ...
 ```
 
-The next step is to run the following command to build and run the YOLO container, but make sure Docker Desktop is running. You can go to the Windows menu, search for Docker Desktop, and open it. Wait for it to start, then type the following command in your terminal:
+The next step is to run the following command to **build and run the YOLO** container, but make sure **Docker Desktop** is running. You can go to the Windows menu, search for **Docker Desktop**, and open it. Wait for it to start, then type the following command in your terminal:
 
 ```
 docker-compose up --build
 ```
 
-`--build` is used when we want to build the Docker container for the first time. This usually takes a long time and can be as large as 10 GB, so make sure you have enough Local Storage.
+`--build` is used when we want to build the Docker container for the first time. This usually takes a long time and can be as large as **10 GB**, so make sure you have enough **Local Storage**.
 
-Next, open Label Studio in your browser again, create a project by clicking the Create button, and give your project a name. For example, "YOLO - Bounding Box - Fruits". This is important so you don't forget what dataset you're labeling and what the task is. But basically, name it however you like.
+Next, open Label Studio in your browser again, create a project by clicking the **Create** button, and give your project a name. For example, **"YOLO - Bounding Box - Fruits"**. This is important so you don't forget what dataset you're labeling and what the task is. But basically, name it however you like.
 
-Next, adjust the Labeling Interface. Once the YOLO container is running, you need to adjust the Labeling Interface in Label Studio to match the YOLO format. You can find the guide 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/yolo#quick-start).
+Next, adjust the **Labeling Interface**. Once the YOLO container is running, you need to adjust the Labeling Interface in Label Studio to match the YOLO format. You can find the guide 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/yolo#quick-start).
 
 Go to the **Labeling Setup** panel and select `Custom template`.
 
@@ -730,7 +730,7 @@ Go to the **Labeling Setup** panel and select `Custom template`.
 
 After opening the Custom template view, you can follow along with me or adjust it according to your label classes.
 
-```
+```xml
 <View>
   <Image name="image" value="$image"/>
   <RectangleLabels name="label" toName="image" model_score_threshold="0.25">
@@ -741,19 +741,19 @@ After opening the Custom template view, you can follow along with me or adjust i
 </View>
 ```
 
-You can either copy or adjust it by changing the value in the `Label` tag. The `predicted_values` section contains the classes that YOLO can predict. You can see the list of classes 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/blob/master/label_studio_ml/examples/yolo/YOLO_CLASSES.md). Next, you'll place the template in the Labeling Interface in Label Studio, as shown below.
+You can either copy or adjust it by changing the value in the `Label` tag. The `predicted_values` section contains the classes that YOLO can predict. You can see the list of classes 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/blob/master/label_studio_ml/examples/yolo/YOLO_CLASSES.md). Next, you'll place the template in the **Labeling Interface** in Label Studio, as shown below.
 
 ![image](https://github.com/user-attachments/assets/e85ba917-407a-4ec6-94be-d25457928b66)
 
-Then, click the Save button. If you've already saved it and want to change the color of each label or add a label class, you can go to Settings → Labeling Interface. You can add classes in the add label names section. If you want to change the label color, you can see no. 2, just click on it and adjust it to the color you think fits.
+Then, click the Save button. If you've already saved it and want to change the color of each label or add a label class, you can go to `Settings >> Labeling Interface`. You can add classes in the add label names section. If you want to change the label color, you can see **no. 2**, just click on it and adjust it to the color you think fits.
 
 ![image](https://github.com/user-attachments/assets/1954a537-4514-4906-b705-b572a8cdf862)
 
-Before we integrate the model into the project, you need to connect your data in local storage to Label Studio. You can check the tutorial for that in the Setup Local Storage in Label Studio section from the previous steps. Now, let's integrate the YOLO model into the project we created. Go to Settings → Model, then click the Connect Model button.
+Before we integrate the model into the project, you need to connect your data in **local storage** to Label Studio. You can check the tutorial for that in the **Setup Local Storage in Label Studio** section from the previous steps. Now, let's integrate the YOLO model into the project we created. Go to `Settings >> Model`, then click the **Connect Model** button.
 
 ![image](https://github.com/user-attachments/assets/ad8e8825-01a7-4fb9-900d-b599a370bd33)
 
-For the configuration, first, give your model a name, then enter the address URL of the model server. By default, it's http://localhost:9090. Don't forget to turn on the Interactive preannotations option. Lastly, click the Validate and Save button, and with this, your model should now be connected to Label Studio.
+For the configuration, first, give your model a name, then enter the address URL of the model server. By default, it's `http://localhost:9090`. Don't forget to turn on the **Interactive preannotations** option. Lastly, click the **Validate** and Save button, and with this, your model should now be connected to Label Studio.
 
 ![image](https://github.com/user-attachments/assets/397ca0e6-9e2e-45cc-9ec4-b8383327e214)
 
@@ -765,9 +765,9 @@ The result should look like this:
 
 ![image](https://github.com/user-attachments/assets/4711c771-5133-4191-a170-96c751d7e51f)
 
-Oh, and don't forget to activate both Auto-Annotation and Auto-Accept Suggestions. And yay, we've successfully set up auto annotation in Label Studio! You can explore more because YOLO not only does bounding boxes but also other tasks. You can see 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/yolo#classification-using-choices).
+Oh, and don't forget to activate both `Auto-Annotation` and `Auto-Accept Suggestions`. And yay, we've successfully set up auto annotation in Label Studio! You can explore more because YOLO not only does bounding boxes but also other tasks. You can see 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/yolo#classification-using-choices).
 
-When you're done using the YOLO model, you can shut down the container to save resources. Make sure you're in the yolo directory.
+When you're done using the YOLO model, you can shut down the container to save resources. Make sure you're in the `yolo` **directory**.
 
 ```
 cd label-studio-ml-backend/label_studio_ml/examples/yolo
@@ -785,13 +785,13 @@ And if you want to run the container again, you can type the following command:
 docker-compose up
 ```
 
-Don't forget to reconnect the model to Label Studio by going to Settings → Model → Edit → Validate and Save.
+Don't forget to reconnect the model to Label Studio by going to `Settings >> Model >> Edit >> Validate and Save`.
 
 ### Bonus: Using a Custom YOLO Model
 Make sure your custom YOLO model is saved in `.pt` format (this is the standard format for PyTorch models). For example, let's say your model file is named `my_custom_model.pt`.
 
 #### Create a Models Folder
-Inside the YOLO project folder (where your `docker-compose.yml` file is located), create a new folder named models if it doesn't already exist. Place your model file (`my_custom_model.pt`) inside this folder.
+Inside the **YOLO project folder** (where your `docker-compose.yml` file is located), create a new folder named **models** if it doesn't already exist. Place your model file (`my_custom_model.pt`) inside this folder.
 
 ```
 yolo/
@@ -814,7 +814,7 @@ services:
     ...
 ```
 
-Ensure that the environment variables are correct. You need to configure some environment variables in the `docker-compose.yml` file:
+Ensure that the **environment variables** are correct. You need to configure some environment variables in the `docker-compose.yml` file:
 
 * `ALLOW_CUSTOM_MODEL_PATH=true`: This gives permission to the Label Studio backend to read the model from a custom path
 * `LABEL_STUDIO_URL`: Fill in your Label Studio URL. If everything is running locally, use:
@@ -826,7 +826,7 @@ LABEL_STUDIO_URL=http://host.docker.internal:8080
 * `LABEL_STUDIO_API_KEY`: You can get this API Key from your Label Studio account (top right corner). Copy the key and place it here.
 * (**Optional**) `LOG_LEVEL`: If you want more detailed logs, you can set this to `DEBUG`.
 
-```
+```yml
 environment:
   - ALLOW_CUSTOM_MODEL_PATH=true
   - LABEL_STUDIO_URL=http://host.docker.internal:8080
@@ -836,7 +836,7 @@ environment:
 
 You need to inform Label Studio that you want to use your custom model for automatic predictions.
 
-In Label Studio, add the `model_path` parameter in the Labeling Interface when creating your project, for example, for Object Detection:
+In Label Studio, add the `model_path` parameter in the **Labeling Interface** when creating your project, for example, for **Object Detection**:
 
 ```xml
 <View>
@@ -851,31 +851,64 @@ In Label Studio, add the `model_path` parameter in the Labeling Interface when c
 </View>
 ```
 
-Remember, model_path: It should match the model file name and the file must be in the /app/models folder inside the Docker container. Mapping Class Names: Ensure that the names in <Label> match the classes your model predicts. If they don't match, add the predicted_values attribute. For example:
+Remember, `model_path`: It should match the model file name and the file must be in the `/app/models` folder inside the Docker container. **Mapping Class Names**: Ensure that the names in `<Label>` match the classes your model predicts. If they don't match, add the `predicted_values` attribute. For example:
+
+```xml
 <Label value="Cat" predicted_values="feline"/>
 <Label value="Dog" predicted_values="canine"/>
-Restart ML Backend
-To apply your changes, restart the Docker backend. Make sure you're in the yolo directory.
-cd label-studio-ml-backend/label_studio_ml/examples/yolo
-docker-compose down
-If you made changes to the docker-compose.yml file, you'll need to rebuild by typing the following in your terminal:
-docker-compose up --build
-If there are no changes, and you just need to place your custom model in the yolo/models folder, you just need to type the following in your terminal:
-docker-compose up
-Open Label Studio, go to Settings in the project you created, and navigate to the Model tab. Fill in the ML Backend URL (usually http://localhost:9090 if it's running locally).
-Add a few tasks (images or other data) to your Label Studio project, and open the task in the Labeling Interface. You should now be able to use your custom model for predictions.
-If You Encounter Errors, Check:
-Wrong Path: Ensure that the model_path in your labeling configuration exactly matches the model file name inside /app/models.
-Label Mismatch: Double-check that your labels in Label Studio match the classes predicted by your model, or use predicted_values to map them.
-Model Keypoints and Model Index: If you're using a keypoints model, you need to specify the model_index parameter for each Label tag.
+```
 
-Setup SAM Model
-After successfully setting up the YOLO model for a custom task, it's time to level up and dive into another awesome model: SAM (Segment Anything Model). While YOLO is great at detecting objects, SAM is like an artist that can divide an image into areas with incredible detail. The setup process is a bit different, but don't worry, I'll guide you step-by-step to make it smooth.
-First, go to the ML Backend directory you previously cloned, but now look for the SAM directory:
+#### Restart ML Backend
+To apply your changes, restart the Docker backend. Make sure you're in the `yolo` **directory**.
+
+```bash
+cd label-studio-ml-backend/label_studio_ml/examples/yolo
+```
+
+```
+docker-compose down
+```
+
+If you made changes to the `docker-compose.yml` file, you'll need to rebuild by typing the following in your terminal:
+
+```
+docker-compose up --build
+```
+
+If there are no changes, and you just need to place your custom model in the `yolo/models` folder, you just need to type the following in your terminal:
+
+```
+docker-compose up
+```
+
+Open Label Studio, go to **Settings** in the project you created, and navigate to the **Model** tab. Fill in the** ML Backend URL** (usually `http://localhost:9090` if it's running locally).
+
+Add a few tasks (images or other data) to your Label Studio project, and open the task in the Labeling Interface. You should now be able to use your custom model for predictions.
+
+#### If You Encounter Errors, Check:
+
+* **Wrong Path**: Ensure that the `model_path` in your labeling configuration exactly matches the model file name inside `/app/models`.
+* **Label Mismatch**: Double-check that your labels in Label Studio match the classes predicted by your model, or use `predicted_values` to map them.
+* **Model Keypoints and Model Index**: If you're using a keypoints model, you need to specify the `model_index` parameter for each **Label** tag.
+
+### Setup SAM Model
+After successfully setting up the YOLO model for a custom task, it's time to level up and dive into another awesome model: **SAM (Segment Anything Model)**. While YOLO is great at detecting objects, SAM is like an artist that can divide an image into areas with incredible detail. The setup process is a bit different, but don't worry, I'll guide you step-by-step to make it smooth.
+
+First, go to the **ML Backend** directory you previously cloned, but now look for the **SAM** directory:
+
+```bash
 cd label-studio-ml-backend/label_studio_ml/examples/segment_anything_model
+```
+
 Then, run the following command:
+
+```bash
 code .
-This step is very similar to setting up the YOLO model. You just need to copy the Label Studio API token into the LABEL_STUDIO_API_KEY variable. Then, for LABEL_STUDIO_HOST, if your Label Studio is running on localhost (usually on port 8080 by default), just copy the URL and add it to the docker-compose.yml file.
+```
+
+This step is very similar to setting up the YOLO model. You just need to copy the **Label Studio API token** into the `LABEL_STUDIO_API_KEY` variable. Then, for `LABEL_STUDIO_HOST`, if your Label Studio is running on localhost (usually on port 8080 by default), just copy the URL and add it to the `docker-compose.yml` file.
+
+```yml
 version: "3.8"
 services:
     ...
@@ -885,7 +918,11 @@ services:
       - LABEL_STUDIO_API_KEY=your_api_key_here
       ...
     ...
-Copy the following script into your docker-compose.yml file.
+```
+
+Copy the following script into your `docker-compose.yml` file.
+
+```yml
 version: "3.8"
 services:
     segment_anything_model:
@@ -930,16 +967,31 @@ services:
             - 9090:9090
         volumes:
             - "./data/server:/data"
-Next, open the Dockerfileand pay attention to the following line in the Dockerfile:
+```
+
+Next, open the `Dockerfile` and pay attention to the following line in the `Dockerfile`:
+
+```yml
 # syntax=docker/dockerfile:1
 ARG PYTHON_VERSION=3.8
 ...
-Change the Python version to 3.9 or higher, because if you use version 3.8, you'll get an error related to version compatibility.
-The next step is to run the following command to build and run the SAM container, but make sure Docker Desktop is already running. You can go to the Windows menu, search for Docker Desktop, open it, and wait for it to start. Then, run the following command in the terminal:
+```
+
+Change the Python version to `3.9` or higher, because if you use version `3.8`, you'll get an error related to version compatibility.
+
+The next step is to run the following command to build and run the SAM container, but make sure **Docker Desktop** is already running. You can go to the **Windows menu**, search for **Docker Desktop**, open it, and wait for it to start. Then, run the following command in the terminal:
+
+```bash
 docker-compose up --build
-After that, open Label Studio in your browser, click on the Create button to create a project, and give it a name, such as "SAM - Instance Segmentation - Cars." It's important so you don't forget what dataset you're labeling and what the task is. But, just name it however you feel comfortable.
-Next, adjust the Labeling Interface. Once the SAM container is up, you'll need to adjust the Labeling Interface in Label Studio according to SAM's format. You can follow the guide directly 👉 here.
-Go to the Labeling Setup panel, and choose Custom template. Once the Custom template page opens, you can follow my instructions or adjust it to match your label classes.
+```
+
+After that, open Label Studio in your browser, click on the `Create` button to create a project, and give it a name, such as "**SAM - Instance Segmentation - Cars.**" It's important so you don't forget what dataset you're labeling and what the task is. But, just name it however you feel comfortable.
+
+Next, adjust the **Labeling Interface**. Once the SAM container is up, you'll need to adjust the **Labeling Interface** in Label Studio according to SAM's format. You can follow the guide directly 👉 [**here**](https://github.com/HumanSignal/label-studio-ml-backend/tree/master/label_studio_ml/examples/segment_anything_model#when-using-the-advancedsam).
+
+Go to the **Labeling Setup** panel, and choose **Custom template**. Once the **Custom template** page opens, you can follow my instructions or adjust it to match your label classes.
+
+```xml
 <View>
 <Style>
   .main {
@@ -1034,19 +1086,47 @@ Go to the Labeling Setup panel, and choose Custom template. Once the Custom temp
   
 </View>
 </View>
-You can copy or adjust by changing the value in the Label tag. Then, place the template in the Labeling Interface section in Label Studio as shown below, and click Save.
-Before integrating the model into the project, you need to connect your local storage data to Label Studio. You can refer to the Setup Local Storage tutorial in the previous step. Next, integrate the SAM model into the project you created by going to Settings -> Model, then click Connect Model.
-For the configuration, first, give your model a name, then fill in the address URL of the model server, which by default is http://localhost:9090. Don't forget to enable the Interactive preannotations option, then click the Validate and Save button. This should connect your model to Label Studio.
-Now, go to your project and click on the image you want to annotate. You should now be able to perform segmentation with the help of SAM.
-Once you're in the main labeling interface, you need to enable Auto-Annotation.
-Enable Auto-Accept Suggestions.
-Choose the Auto-detect feature.
-Then, you just need to select whether you want to segment using the brush, keypoints, or rectangles mode.
+```
 
-And yay, we have successfully set up auto annotation for the SAM model in Label Studio! If you're done using the SAM container, you can turn it off to save resources. Just make sure you're in the segment_anything_model directory.
+You can copy or adjust by changing the `value` in the `Label` tag. Then, place the template in the **Labeling Interface** section in Label Studio as shown below, and click `Save`.
+
+![image](https://github.com/user-attachments/assets/07d03453-a6ef-4c1e-88b6-0bf5a68483e8)
+
+Before integrating the model into the project, you need to connect your local storage data to Label Studio. You can refer to the **Setup Local Storage** tutorial in the previous step. Next, integrate the **SAM model** into the project you created by going to **Settings >> Model**, then click **Connect Model**.
+
+![image](https://github.com/user-attachments/assets/74897ee7-9782-43e5-af51-d2e07f6404a7)
+
+For the configuration, first, give your model a name, then fill in the address URL of the model server, which by default is `http://localhost:9090`. Don't forget to enable the `Interactive` **preannotations** option, then click the `Validate and Save` button. This should connect your model to Label Studio.
+
+![image](https://github.com/user-attachments/assets/f354d96c-166d-472a-aeb7-d9f589085adb)
+
+![image](https://github.com/user-attachments/assets/1c92e28d-2b4d-4ffd-a389-6c5b6b19e8c7)
+
+Now, go to your project and click on the image you want to annotate. You should now be able to perform segmentation with the help of **SAM**.
+
+![image](https://github.com/user-attachments/assets/b2876084-800f-4dbc-820c-fec74b4498f4)
+
+1. Once you're in the main labeling interface, you need to enable Auto-`Annotation`.
+2. Enable `Auto-Accept Suggestions`.
+3. Choose the `Auto-detect` feature.
+4. Then, you just need to select whether you want to segment using the `brush`, `keypoints`, or `rectangles` mode.
+
+And yay, we have successfully set up auto annotation for the SAM model in Label Studio! If you're done using the SAM container, you can turn it off to save resources. Just make sure you're in the `segment_anything_model` directory.
+
+```bash
 cd label-studio-ml-backend/label_studio_ml/examples/segment_anythin_model
+```
+
 Then, run the command:
+
+```bash
 docker-compose down
+```
+
 And if you want to run the container again, you can type the following command:
+
+```bash
 docker-compose up
-Don't forget to reconnect the model to Label Studio by going to Settings → Model → Edit → Validate and Save.
+```
+
+Don't forget to reconnect the model to Label Studio by going to `Settings → Model → Edit → Validate and Save`.
